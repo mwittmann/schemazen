@@ -126,6 +126,7 @@
   -->
   <PropertyGroup>
     <PostBuildEvent>$(SolutionDir)\packages\ilmerge.2.13.0307\ilmerge /target:exe /out:schemazen.exe console.exe model.dll ManyConsole.dll NDesk.Options.dll
+copy $(SolutionDir)\console\bin\Debug\schemazen.exe ..\..\..\..
 </PostBuildEvent>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
