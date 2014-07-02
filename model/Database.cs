@@ -377,13 +377,15 @@ select s.name as schemaName, p.name as principalName
 					}
 
 					//get foreign keys
+					//use deterministic order for consistency in scripting
 					cm.CommandText = @"
 					select 
 						TABLE_SCHEMA,
 						TABLE_NAME, 
 						CONSTRAINT_NAME, * 
-					from INFORMATION_SCHEMA.TABLE_CONSTRAINTS
-					where CONSTRAINT_TYPE = 'FOREIGN KEY'";
+					from INFORMATION_SCHEMA.TABLE_CONSTRAINTS tc
+					where CONSTRAINT_TYPE = 'FOREIGN KEY'
+					order by tc.CONSTRAINT_NAME";
 					using (SqlDataReader dr = cm.ExecuteReader()) {
 						while (dr.Read()) {
 							Table t = FindTable((string)dr["TABLE_NAME"], (string)dr["TABLE_SCHEMA"]);
